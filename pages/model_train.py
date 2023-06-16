@@ -10,7 +10,7 @@ import sklearn
 import seaborn as sns
 from sklearn import tree
 from sklearn.metrics import mean_squared_error, accuracy_score, recall_score, precision_score, f1_score, confusion_matrix, roc_curve, classification_report
-import graphviz
+
 
 # 페이지 할당
 st.set_page_config(page_title="model_train")
