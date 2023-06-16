@@ -6,7 +6,7 @@ from cache import *
 import os
 import datetime
 from sklearn.model_selection import train_test_split
-import sklern
+import sklearn
 import seaborn as sns
 from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
