@@ -61,74 +61,72 @@ if selecop == 'decision_Tree':
     with col7:
         vis = st.checkbox("시각화 여부", value=True)
     # Decision Tree 모델 학습
-if st.button('설정 완료'):
-    clf, model, train_data, test_data = DecisionTreeRegressor(new_df, 0.2, max_trials, epochs, verbose, is_training, vis)
+    if st.button('설정 완료'):
+        clf, model, train_data, test_data = DecisionTreeRegressor(new_df, 0.2, max_trials, epochs, verbose, is_training, vis)
 
-    if clf is not None:
-        st.success("의사결정 나무 모델 학습이 완료되었습니다!")
-        st.write("모델 정보:")
-        st.write(model)
+        if clf is not None:
+            st.success("의사결정 나무 모델 학습이 완료되었습니다!")
+            st.write("모델 정보:")
+            st.write(model)
 
-        # Check if the model is trained
-        if is_training:
-            # Fit the model with training data
-            clf.fit(train_data[["Min_pH", "Min_Temp", "Min_Voltage", "Min_Current",
-                                "Max_pH", "Max_Temp", "Max_Voltage", "Max_Current", 
-                                "Mean_pH", "Mean_Temp", "Mean_Voltage", "Mean_Current"]],
-                    train_data["QC"])
+            # Check if the model is trained
+            if is_training:
+                # Fit the model with training data
+                clf.fit(train_data[["Min_pH", "Min_Temp", "Min_Voltage", "Min_Current",
+                                    "Max_pH", "Max_Temp", "Max_Voltage", "Max_Current", 
+                                    "Mean_pH", "Mean_Temp", "Mean_Voltage", "Mean_Current"]],
+                        train_data["QC"])
 
-        # Evaluate the model
+            # Evaluate the model
+            st.title("의사결정 나무 모델 평가")
+            evaluate_regression_model(test_data,model)
+
+            if vis:
+                if vis:
+                    plt.figure(figsize=(10, 30))
+                    tree.plot_tree(clf, filled=True)
+                    plt.title('Decision Tree Visualization')
+                    plt.savefig("decision_tree.png")  # Save the decision tree visualization as an image
+                    plt.show()
+
+                    # Display the image in Streamlit
+                    st.image("decision_tree.png")
+        else:
+            st.warning("의사결정 나무 모델 학습에 실패했습니다.")
+
+
+
+        
         st.title("의사결정 나무 모델 평가")
-        evaluate_regression_model(test_data,model)
+        y_test, y_pred, TP, FP, FN, TN, rmse, accuarcy_t_score, recall_t_score, precision_t_score, F1_t_score, tpr, fpr, tpr_val, fpr_val, auc_val = evaluate_regression_model(test_data, model)
 
-        if vis:
-           if vis:
-                plt.figure(figsize=(10, 30))
-                tree.plot_tree(clf, filled=True)
-                plt.title('Decision Tree Visualization')
-                plt.savefig("decision_tree.png")  # Save the decision tree visualization as an image
-                plt.show()
+        st.write("의사결정 나무 모델 평가\n")
+        st.write("RMSE:", rmse)
+        st.write("Accuracy:", accuarcy_t_score)
+        st.write("Recall:", recall_t_score)
+        st.write("Precision:", precision_t_score)
+        st.write("F1 score:", F1_t_score)
+        st.write("TP:", TP, "FP:", FP, "FN:", FN, "TN:", TN)
+    
+        st.write("TPR (True Positive Rate):", tpr_val)
+        st.write("FPR (False Positive Rate):", fpr_val)
+        st.write("AUC Score:", auc_val)
+        st.write("tpr:", tpr)
+        st.write("fpr:", fpr)
 
-                # Display the image in Streamlit
-                st.image("decision_tree.png")
-    else:
-        st.warning("의사결정 나무 모델 학습에 실패했습니다.")
-
-
-
-       
-    st.title("의사결정 나무 모델 평가")
-    y_test, y_pred, TP, FP, FN, TN, rmse, accuarcy_t_score, recall_t_score, precision_t_score, F1_t_score, tpr, fpr, tpr_val, fpr_val, auc_val = evaluate_regression_model(test_data, model)
-
-    st.write("의사결정 나무 모델 평가\n")
-    st.write("RMSE:", rmse)
-    st.write("Accuracy:", accuarcy_t_score)
-    st.write("Recall:", recall_t_score)
-    st.write("Precision:", precision_t_score)
-    st.write("F1 score:", F1_t_score)
-    st.write("TP:", TP)
-    st.write("FP:", FP)
-    st.write("FN:", FN)
-    st.write("TN:", TN)
-    st.write("TPR (True Positive Rate):", tpr_val)
-    st.write("FPR (False Positive Rate):", fpr_val)
-    st.write("AUC Score:", auc_val)
-    st.write("tpr:", tpr)
-    st.write("fpr:", fpr)
-
-    plt.figure()
-    plt.plot(fpr, tpr, 'o-', label="Decision_Tree")
-    plt.plot([0, 1], [0, 1], 'k--', label="random guess")
-    plt.plot([fpr_val], [tpr_val], 'ro', ms=10)
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('Receiver operating characteristic example')
-    plt.grid()
-    plt.legend()
+        plt.figure()
+        plt.plot(fpr, tpr, 'o-', label="Decision_Tree")
+        plt.plot([0, 1], [0, 1], 'k--', label="random guess")
+        plt.plot([fpr_val], [tpr_val], 'ro', ms=10)
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('Receiver operating characteristic example')
+        plt.grid()
+        plt.legend()
 
 
-    # Display the plot in Streamlit
-    st.pyplot(plt)
+        # Display the plot in Streamlit
+        st.pyplot(plt)
 
 # # decision_Tree_Test 선택
 # #if selecop == 'decision_Tree_Test':

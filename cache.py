@@ -378,7 +378,8 @@ def evaluate_regression_model(test_data, _model):
 
     # ROC Curve 계산
     fpr, tpr, _ = roc_curve(y_test, y_pred)
-
+    tpr[1] = tpr_val
+    fpr[1] = fpr_val
     # AUC 계산
     auc_val = auc(fpr, tpr)
 

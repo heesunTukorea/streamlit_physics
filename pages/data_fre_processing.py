@@ -45,12 +45,13 @@ if selecop == '병합_csv':
         if selecop1 == '상관관계 분석':
 
             correlation = correlation_def(df_m)
-            if correlation is not None:
-                st.title("상관관계 분석")
-                st.write(correlation)
-                fig, ax = plt.subplots(figsize=(10, 8))
-                sns.heatmap(correlation, annot=True, fmt=".2f", ax=ax)
-                st.pyplot(fig)
+
+            st.title("상관관계 분석")
+            st.write(correlation)
+            fig, ax = plt.subplots(figsize=(10, 8))
+            sns.heatmap(correlation, annot=True, fmt=".2f", ax=ax)
+            st.pyplot(fig)
+    
 
         if selecop1 == '데이터 분포':
 
@@ -59,6 +60,8 @@ if selecop == '병합_csv':
             fig, ax = plt.subplots(figsize=(10, 10))
             df_m.hist(ax=ax)
             plt.tight_layout()
+        else:
+            pass
 
 df_QC = add_QC(dedicated_data)
 #오류값을 나눈 데이터 프레임과 간단 분석
@@ -74,12 +77,12 @@ if selecop == '오류값 생성_csv':
         selecop2 = st.selectbox('데이터 간단 분석', ('','상관관계 분석', '데이터 분포'))
         if selecop2 == '상관관계 분석':
             correlation1 = correlation_def(df_QC)
-            if correlation1 is not None: 
-                st.title("상관관계 분석")
-                st.write(correlation1)
-                fig1, ax1 = plt.subplots(figsize=(10, 8))
-                sns.heatmap(correlation1, annot=True, fmt=".2f", ax=ax1)
-                st.pyplot(fig1)
+            st.title("상관관계 분석")
+            st.write(correlation1)
+            fig1, ax1 = plt.subplots(figsize=(10, 8))
+            sns.heatmap(correlation1, annot=True, fmt=".2f", ax=ax1)
+            st.pyplot(fig1)
+
 
         if selecop2 == '데이터 분포':
             
@@ -90,6 +93,8 @@ if selecop == '오류값 생성_csv':
             df_QC1.hist(ax=ax1)
             plt.tight_layout()
             st.pyplot(fig1)
+        else:
+            pass
 
 #로트별 데이터로 나누고 범위를 조정 시각화 하는 코드            
 if selecop == '로트별 데이터':
