@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 import sklearn
 from matplotlib import pyplot as plt
 import seaborn as sns
+
 # Display editor's content as you type
 st.set_page_config(page_title="data_set")
 
@@ -18,7 +19,7 @@ with col2:
 
 st.title('데이터셋')
 
-st.title("Data Loading and Processing")
+st.header("Data Loading ")
 
 
 
@@ -121,3 +122,11 @@ st.write(" 데이터 형태:", df_shape)
 #         st.header("q_time.csv")
 # else:
 #     st.write("데이터 정보를 입력해 주세요")
+
+
+with st.sidebar:
+    st.sidebar.markdown("## 목록")
+    st.write("총괄리더: 신형찬")
+    st.write("분석팀장: 안이찬")
+    st.write("개발팀장: 양희선")
+    st.write("팀원: 정원석")

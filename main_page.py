@@ -16,7 +16,7 @@ st.markdown(
 col1, col2 = st.columns([7, 2])
 
 with col1:
-    st.title("도금욕 공정의 품질 예측을 위한 이상감지")
+    st.title("도금욕 공정의 센서 데이터를 이용한 품질 예측")
 
     
 
@@ -33,4 +33,11 @@ with st.sidebar:
     st.write("팀원: 정원석")
 
 
+st.header("")
+st.header("")
+st.header("")
 
+
+
+image1 = Image.open("dogum.png")
+st.image(image1)
